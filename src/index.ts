@@ -33,9 +33,18 @@ const main = async () => {
   const card2 = deck.draw()!;
   const card3 = deck.draw()!;
 
-  const hand = new Hand({ cards: [card1, card2, card3] });
+  const card4 = deck.draw()!;
+  const card5 = deck.draw()!;
+  const card6 = deck.draw()!;
 
-  app.stage.addChild(hand);
+  const topHand = new Hand({ cards: [card1, card2, card3] });
+  topHand.position.set(app.screen.width / 2, app.screen.height / 2 - 200);
+
+  const bottomHand = new Hand({ cards: [card4, card5, card6] });
+  bottomHand.position.set(app.screen.width / 2, app.screen.height / 2 + 200);
+
+  app.stage.addChild(topHand);
+  app.stage.addChild(bottomHand);
 };
 
 main();
