@@ -2,6 +2,7 @@ import { Application, Sprite } from "pixi.js";
 import { Deck } from "./Deck";
 import { Hand } from "./Hand";
 import { CommunityCards } from "./CommunityCards";
+import { Result } from "./Result";
 
 const main = async () => {
   const app = new Application();
@@ -15,12 +16,61 @@ const main = async () => {
     height: 1000,
   });
 
+  const pressedKey = { ArrowUp: false, ArrowDown: false };
+
+  window.addEventListener(
+    "keydown",
+    (e) => {
+      switch (e.key) {
+        case "ArrowUp":
+          pressedKey.ArrowUp = true;
+          break;
+        case "ArrowDown":
+          pressedKey.ArrowDown = true;
+          break;
+      }
+    },
+    false
+  );
+  window.addEventListener(
+    "keyup",
+    (e) => {
+      switch (e.key) {
+        case "ArrowUp":
+          pressedKey.ArrowUp = false;
+          app.stage.addChild(goodResult);
+          setTimeout(() => {
+            app.stage.removeChild(goodResult);
+          }, 1000);
+          break;
+        case "ArrowDown":
+          pressedKey.ArrowDown = false;
+          app.stage.addChild(badResult);
+          setTimeout(() => {
+            app.stage.removeChild(badResult);
+          }, 1000);
+          break;
+      }
+    },
+    false
+  );
+
+  app.stage.eventMode = "static";
+  app.stage.on("keydown", (e) => {
+    console.log(e);
+  });
+
   const clampy: Sprite = Sprite.from("clampy.png");
 
   clampy.anchor.set(0.5);
 
   clampy.x = app.screen.width / 2;
   clampy.y = app.screen.height / 2;
+
+  const goodResult = new Result({ result: "You win!" });
+  goodResult.position.set(app.screen.width / 2, app.screen.height / 2);
+  const badResult = new Result({ result: "You lose!" });
+  badResult.position.set(app.screen.width / 2, app.screen.height / 2);
 
   const deck = new Deck();
 
