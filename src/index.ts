@@ -3,6 +3,7 @@ import { Deck } from "./Deck";
 import { Hand } from "./Hand";
 import { CommunityCards } from "./CommunityCards";
 import { Result } from "./Result";
+import { Table } from "./Table";
 
 const main = async () => {
   const app = new Application();
@@ -41,6 +42,7 @@ const main = async () => {
           app.stage.addChild(goodResult);
           setTimeout(() => {
             app.stage.removeChild(goodResult);
+            table.deal();
           }, 1000);
           break;
         case "ArrowDown":
@@ -48,6 +50,7 @@ const main = async () => {
           app.stage.addChild(badResult);
           setTimeout(() => {
             app.stage.removeChild(badResult);
+            table.deal();
           }, 1000);
           break;
       }
@@ -55,55 +58,17 @@ const main = async () => {
     false
   );
 
-  app.stage.eventMode = "static";
-  app.stage.on("keydown", (e) => {
-    console.log(e);
-  });
-
-  const clampy: Sprite = Sprite.from("clampy.png");
-
-  clampy.anchor.set(0.5);
-
-  clampy.x = app.screen.width / 2;
-  clampy.y = app.screen.height / 2;
-
   const goodResult = new Result({ result: "You win!" });
   goodResult.position.set(app.screen.width / 2, app.screen.height / 2);
   const badResult = new Result({ result: "You lose!" });
   badResult.position.set(app.screen.width / 2, app.screen.height / 2);
 
-  const deck = new Deck();
+  const table = new Table({
+    appWidth: app.screen.width,
+    appHeight: app.screen.height,
+  });
 
-  deck.shuffle();
-
-  // deck.cards.forEach((card, i) => {
-  //   console.log(`${i + 1}: ${card.suit} ${card.number}`);
-  // });
-
-  const card1 = deck.draw()!;
-  const card2 = deck.draw()!;
-  const card3 = deck.draw()!;
-
-  const card4 = deck.draw()!;
-  const card5 = deck.draw()!;
-  const card6 = deck.draw()!;
-
-  const card7 = deck.draw()!;
-  const card8 = deck.draw()!;
-  const card9 = deck.draw()!;
-
-  const topHand = new Hand({ cards: [card1, card2, card3] });
-  topHand.position.set(app.screen.width / 2, app.screen.height / 2 - 200);
-
-  const bottomHand = new Hand({ cards: [card4, card5, card6] });
-  bottomHand.position.set(app.screen.width / 2, app.screen.height / 2 + 200);
-
-  const communityCards = new CommunityCards({ cards: [card7, card8, card9] });
-  communityCards.position.set(100, app.screen.height / 2);
-
-  app.stage.addChild(topHand);
-  app.stage.addChild(bottomHand);
-  app.stage.addChild(communityCards);
+  app.stage.addChild(table);
 };
 
 main();
