@@ -1,6 +1,7 @@
 import { Application, Sprite } from "pixi.js";
 import { Deck } from "./Deck";
 import { Hand } from "./Hand";
+import { CommunityCards } from "./CommunityCards";
 
 const main = async () => {
   const app = new Application();
@@ -10,8 +11,8 @@ const main = async () => {
     resolution: window.devicePixelRatio || 1,
     autoDensity: true,
     backgroundColor: 0x35654d,
-    width: 480,
-    height: 640,
+    width: 960,
+    height: 1000,
   });
 
   const clampy: Sprite = Sprite.from("clampy.png");
@@ -23,7 +24,7 @@ const main = async () => {
 
   const deck = new Deck();
 
-  // deck.shuffle();
+  deck.shuffle();
 
   // deck.cards.forEach((card, i) => {
   //   console.log(`${i + 1}: ${card.suit} ${card.number}`);
@@ -37,14 +38,22 @@ const main = async () => {
   const card5 = deck.draw()!;
   const card6 = deck.draw()!;
 
+  const card7 = deck.draw()!;
+  const card8 = deck.draw()!;
+  const card9 = deck.draw()!;
+
   const topHand = new Hand({ cards: [card1, card2, card3] });
   topHand.position.set(app.screen.width / 2, app.screen.height / 2 - 200);
 
   const bottomHand = new Hand({ cards: [card4, card5, card6] });
   bottomHand.position.set(app.screen.width / 2, app.screen.height / 2 + 200);
 
+  const communityCards = new CommunityCards({ cards: [card7, card8, card9] });
+  communityCards.position.set(100, app.screen.height / 2);
+
   app.stage.addChild(topHand);
   app.stage.addChild(bottomHand);
+  app.stage.addChild(communityCards);
 };
 
 main();
