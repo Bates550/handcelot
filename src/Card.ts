@@ -1,4 +1,4 @@
-import { Text, Container } from "pixi.js";
+import { Text, Container, Graphics } from "pixi.js";
 
 export const SUITS = {
   HEARTS: "hearts",
@@ -12,11 +12,18 @@ export class Card extends Container {
   suit: Suit;
   rank: number;
   text: Text;
+  cardRectangle: Graphics;
 
-  constructor(params: { suit: Suit; rank: number }) {
+  constructor(params: {
+    suit: Suit;
+    rank: number;
+    position?: { x: number; y: number };
+  }) {
+    const { suit, rank, position = { x: 0, y: 0 } } = params;
+
     super();
-    this.suit = params.suit;
-    this.rank = params.rank;
+    this.suit = suit;
+    this.rank = rank;
 
     this.text = new Text({
       text: `${this.prettyRank()} ${this.prettySuit()}`,
@@ -28,7 +35,18 @@ export class Card extends Container {
       },
     });
 
+    this.cardRectangle = new Graphics()
+      .roundRect(0, 0, 100, 200, 10)
+      .fill(0xffffff);
+
+    this.addChild(this.cardRectangle);
     this.addChild(this.text);
+
+    this.setPosition(position);
+  }
+
+  setPosition(position: { x: number; y: number }) {
+    this.position.set(position.x, position.y);
   }
 
   suitColor() {
