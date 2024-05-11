@@ -1,28 +1,36 @@
 import { Application, Sprite } from "pixi.js";
 import { Deck } from "./Deck";
 
-const app = new Application<HTMLCanvasElement>({
-  view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
-  resolution: window.devicePixelRatio || 1,
-  autoDensity: true,
-  backgroundColor: 0x6495ed,
-  width: 640,
-  height: 480,
-});
+const main = async () => {
+  const app = new Application();
 
-const clampy: Sprite = Sprite.from("clampy.png");
+  await app.init({
+    view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
+    resolution: window.devicePixelRatio || 1,
+    autoDensity: true,
+    backgroundColor: 0x35654d,
+    width: 480,
+    height: 640,
+  });
 
-clampy.anchor.set(0.5);
+  const clampy: Sprite = Sprite.from("clampy.png");
 
-clampy.x = app.screen.width / 2;
-clampy.y = app.screen.height / 2;
+  clampy.anchor.set(0.5);
 
-const deck = new Deck();
+  clampy.x = app.screen.width / 2;
+  clampy.y = app.screen.height / 2;
 
-// deck.shuffle();
+  const deck = new Deck();
 
-deck.cards.forEach((card, i) => {
-  console.log(`${i + 1}: ${card.suit} ${card.number}`);
-});
+  // deck.shuffle();
 
-app.stage.addChild(clampy);
+  // deck.cards.forEach((card, i) => {
+  //   console.log(`${i + 1}: ${card.suit} ${card.number}`);
+  // });
+
+  const card = deck.draw()!;
+
+  app.stage.addChild(card);
+};
+
+main();
