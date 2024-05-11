@@ -1,5 +1,6 @@
 import { Application, Sprite } from "pixi.js";
 import { Deck } from "./Deck";
+import { Hand } from "./Hand";
 
 const main = async () => {
   const app = new Application();
@@ -28,9 +29,13 @@ const main = async () => {
   //   console.log(`${i + 1}: ${card.suit} ${card.number}`);
   // });
 
-  const card = deck.draw()!;
+  const card1 = deck.draw()!;
+  const card2 = deck.draw()!;
+  const card3 = deck.draw()!;
 
-  app.stage.addChild(card);
+  const hand = new Hand({ cards: [card1, card2, card3] });
+
+  app.stage.addChild(hand);
 };
 
 main();
