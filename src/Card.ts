@@ -5,7 +5,7 @@ export const SUITS = {
   DIAMONDS: "diamonds",
   CLUBS: "clubs",
   SPADES: "spades",
-};
+} as const;
 export type Suit = (typeof SUITS)[keyof typeof SUITS];
 
 export class Card extends Container {
