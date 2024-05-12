@@ -3,14 +3,18 @@ import { Card } from "./Card";
 import { Hand } from "./Hand";
 import { CommunityCards } from "./CommunityCards";
 import { Deck } from "./Deck";
+import { determineWinningHand } from "./determineWinningHand";
+
+type WinningHand = "top" | "bottom";
 
 export class Table extends Container {
-  topHand?: Hand;
-  bottomHand?: Hand;
-  communityCards?: CommunityCards;
-  deck: Deck;
-  appWidth: number;
-  appHeight: number;
+  private topHand?: Hand;
+  private bottomHand?: Hand;
+  private communityCards?: CommunityCards;
+  private deck: Deck;
+  private appWidth: number;
+  private appHeight: number;
+  private _winningHand?: WinningHand;
 
   constructor(params: { appWidth: number; appHeight: number }) {
     super();
@@ -23,6 +27,17 @@ export class Table extends Container {
 
     this.deck.shuffle();
     this.deal();
+  }
+
+  get winningHand() {
+    if (this._winningHand === undefined) {
+      throw new Error("Winning hand requested before it was determined.");
+    }
+    return this._winningHand;
+  }
+
+  set winningHand(val: WinningHand) {
+    this._winningHand = val;
   }
 
   deal() {
@@ -55,6 +70,17 @@ export class Table extends Container {
     this.addChild(this.topHand);
     this.addChild(this.bottomHand);
     this.addChild(this.communityCards);
+
+    const winningHand = determineWinningHand({
+      a: this.topHand,
+      b: this.bottomHand,
+      communityCards: this.communityCards,
+    });
+    if (winningHand === "a") {
+      this.winningHand = "top";
+    } else {
+      this.winningHand = "bottom";
+    }
 
     this.topHand.position.set(this.appWidth / 2, this.appHeight / 2 - 200);
     this.bottomHand.position.set(this.appWidth / 2, this.appHeight / 2 + 200);
