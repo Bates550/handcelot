@@ -40,5 +40,24 @@ describe("HeldHand", () => {
         },
       ]);
     });
+
+    it("detects four of a kind", () => {
+      const cards = [
+        C.ACE_OF_CLUBS,
+        C.TWO_OF_DIAMONDS,
+        C.ACE_OF_DIAMONDS,
+        C.ACE_OF_HEARTS,
+        C.ACE_OF_SPADES,
+      ];
+
+      const hand = new HeldHand({ cards });
+
+      expect(hand.availableHands()).toEqual([
+        {
+          name: POKER_HAND_NAMES.FOUR_OF_A_KIND,
+          cards,
+        },
+      ]);
+    });
   });
 });
