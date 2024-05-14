@@ -1,0 +1,57 @@
+import { Card, SUIT } from "./Card";
+
+export const ACE_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 1 });
+export const TWO_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 2 });
+export const THREE_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 3 });
+export const FOUR_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 4 });
+export const FIVE_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 5 });
+export const SIX_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 6 });
+export const SEVEN_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 7 });
+export const EIGHT_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 8 });
+export const NINE_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 9 });
+export const TEN_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 10 });
+export const JACK_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 11 });
+export const QUEEN_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 12 });
+export const KING_OF_SPADES = new Card({ suit: SUIT.SPADES, rank: 13 });
+
+export const ACE_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 1 });
+export const TWO_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 2 });
+export const THREE_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 3 });
+export const FOUR_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 4 });
+export const FIVE_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 5 });
+export const SIX_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 6 });
+export const SEVEN_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 7 });
+export const EIGHT_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 8 });
+export const NINE_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 9 });
+export const TEN_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 10 });
+export const JACK_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 11 });
+export const QUEEN_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 12 });
+export const KING_OF_HEARTS = new Card({ suit: SUIT.HEARTS, rank: 13 });
+
+export const ACE_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 1 });
+export const TWO_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 2 });
+export const THREE_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 3 });
+export const FOUR_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 4 });
+export const FIVE_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 5 });
+export const SIX_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 6 });
+export const SEVEN_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 7 });
+export const EIGHT_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 8 });
+export const NINE_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 9 });
+export const TEN_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 10 });
+export const JACK_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 11 });
+export const QUEEN_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 12 });
+export const KING_OF_CLUBS = new Card({ suit: SUIT.CLUBS, rank: 13 });
+
+export const ACE_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 1 });
+export const TWO_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 2 });
+export const THREE_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 3 });
+export const FOUR_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 4 });
+export const FIVE_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 5 });
+export const SIX_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 6 });
+export const SEVEN_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 7 });
+export const EIGHT_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 8 });
+export const NINE_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 9 });
+export const TEN_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 10 });
+export const JACK_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 11 });
+export const QUEEN_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 12 });
+export const KING_OF_DIAMONDS = new Card({ suit: SUIT.DIAMONDS, rank: 13 });

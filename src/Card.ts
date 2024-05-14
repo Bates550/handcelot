@@ -8,7 +8,7 @@ export const SUITS = {
 } as const;
 export type Suit = (typeof SUITS)[keyof typeof SUITS];
 
-export class Card extends Container {
+export class CardContainer extends Container {
   suit: Suit;
   rank: number;
   text: Text;

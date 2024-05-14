@@ -1,6 +1,6 @@
 import { Container } from "pixi.js";
-import { Card } from "./Card";
-import { Hand } from "./Hand";
+import { CardContainer } from "./Card";
+import { HandContainer } from "./Hand";
 import { CommunityCards } from "./CommunityCards";
 import { Deck } from "./Deck";
 import { determineWinningHand } from "./determineWinningHand";
@@ -8,8 +8,8 @@ import { determineWinningHand } from "./determineWinningHand";
 type WinningHand = "top" | "bottom";
 
 export class Table extends Container {
-  private topHand?: Hand;
-  private bottomHand?: Hand;
+  private topHand?: HandContainer;
+  private bottomHand?: HandContainer;
   private communityCards?: CommunityCards;
   private deck: Deck;
   private appWidth: number;
@@ -63,8 +63,8 @@ export class Table extends Container {
     const card8 = this.deck.draw()!;
     const card9 = this.deck.draw()!;
 
-    this.topHand = new Hand({ cards: [card1, card2, card3] });
-    this.bottomHand = new Hand({ cards: [card4, card5, card6] });
+    this.topHand = new HandContainer({ cards: [card1, card2, card3] });
+    this.bottomHand = new HandContainer({ cards: [card4, card5, card6] });
     this.communityCards = new CommunityCards({ cards: [card7, card8, card9] });
 
     this.addChild(this.topHand);

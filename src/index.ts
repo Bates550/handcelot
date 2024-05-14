@@ -1,6 +1,6 @@
 import { Application, Sprite } from "pixi.js";
 import { Deck } from "./Deck";
-import { Hand } from "./Hand";
+import { HandContainer } from "./Hand";
 import { CommunityCards } from "./CommunityCards";
 import { Result } from "./Result";
 import { Table } from "./Table";

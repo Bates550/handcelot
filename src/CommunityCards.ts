@@ -1,10 +1,10 @@
 import { Container } from "pixi.js";
-import { Card } from "./Card";
+import { CardContainer } from "./Card";
 
 export class CommunityCards extends Container {
-  cards: Card[] = [];
+  cards: CardContainer[] = [];
 
-  constructor(params: { cards: Card[] }) {
+  constructor(params: { cards: CardContainer[] }) {
     const { cards } = params;
 
     super();

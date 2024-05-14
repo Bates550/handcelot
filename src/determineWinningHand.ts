@@ -1,10 +1,10 @@
 import { CommunityCards } from "./CommunityCards";
-import { Hand } from "./Hand";
-import { Card } from "./Card";
+import { HandContainer } from "./Hand";
+import { CardContainer } from "./Card";
 
 export const determineWinningHand = (params: {
-  a: Hand;
-  b: Hand;
+  a: HandContainer;
+  b: HandContainer;
   communityCards: CommunityCards;
 }): "a" | "b" => {
   const { a, b, communityCards } = params;
@@ -31,10 +31,10 @@ type ShowdownName = (typeof SHOWDOWN_NAME)[keyof typeof SHOWDOWN_NAME];
 
 type Showdown = {
   name: ShowdownName;
-  cards: Card[];
+  cards: CardContainer[];
 };
 
-const findHighestHand = (cards: Card[]): Showdown => {
+const findHighestHand = (cards: CardContainer[]): Showdown => {
   cards.sort((a, b) => {
     return a.rank - b.rank;
   });
@@ -52,7 +52,7 @@ const findHighestHand = (cards: Card[]): Showdown => {
   };
 };
 
-const isRoyalFlush = (cards: Card[]): boolean => {
+const isRoyalFlush = (cards: CardContainer[]): boolean => {
   const ranks = cards.map((card) => card.rank);
   const hasStraightRoyals =
     ranks.includes(1) && // A
@@ -63,11 +63,11 @@ const isRoyalFlush = (cards: Card[]): boolean => {
   return hasStraightRoyals;
 };
 
-const isStraightFlush = (cards: Card[]): boolean => {
+const isStraightFlush = (cards: CardContainer[]): boolean => {
   return false;
 };
 
-const isStraight = (cards: Card[]): boolean => {
+const isStraight = (cards: CardContainer[]): boolean => {
   // highest to lowest
   const c = [...cards].reverse();
   let straightBegin = 0;
