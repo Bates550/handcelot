@@ -55,7 +55,13 @@ describe("HeldHand", () => {
       expect(hand.availableHands()).toEqual([
         {
           name: POKER_HAND_NAMES.FOUR_OF_A_KIND,
-          cards,
+          cards: [
+            { ...C.ACE_OF_CLUBS, scored: true },
+            { ...C.ACE_OF_DIAMONDS, scored: true },
+            { ...C.ACE_OF_HEARTS, scored: true },
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.TWO_OF_DIAMONDS, scored: false },
+          ],
         },
       ]);
     });
