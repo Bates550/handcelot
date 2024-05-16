@@ -1,6 +1,11 @@
 import { Card } from "./Card";
 
-const isRoyal = (cards: Card[]): boolean => {
+type Result = {
+  result: boolean;
+  cards: PlayedCard[];
+};
+
+const isRoyal = (cards: Card[]): Result => {
   const ranks = cards.map((card) => card.rank);
   const hasStraightRoyals =
     ranks.includes(1) && // A
@@ -8,38 +13,75 @@ const isRoyal = (cards: Card[]): boolean => {
     ranks.includes(12) && // Q
     ranks.includes(11) && // J
     ranks.includes(10);
-  return hasStraightRoyals;
+
+  const royalRanks = [1, 13, 12, 11, 10];
+  if (hasStraightRoyals) {
+    const playedCards: PlayedCard[] = cards.map((card) => {
+      return {
+        ...card,
+        scored: royalRanks.includes(card.rank),
+      };
+    });
+
+    // Put ace on the end
+    const ace = playedCards[0];
+    playedCards.shift();
+    playedCards.push(ace);
+
+    return {
+      result: true,
+      cards: playedCards,
+    };
+  }
+
+  return {
+    result: false,
+    cards: [],
+  };
 };
 
-const isStraight = (cards: Card[]): boolean => {
+const isStraight = (cards: Card[]): Result => {
   for (let i = 0; i < cards.length - 1; ++i) {
     const rank = cards[i].rank;
     const nextRank = cards[i + 1].rank;
 
     if (rank + 1 !== nextRank) {
-      return false;
+      return {
+        result: false,
+        cards: [],
+      };
     }
   }
-  return true;
+
+  return {
+    result: true,
+    cards: cards.map((card) => {
+      return { ...card, scored: true };
+    }),
+  };
 };
 
-const isFlush = (cards: Card[]): boolean => {
+const isFlush = (cards: Card[]): Result => {
   for (let i = 0; i < cards.length - 1; ++i) {
     const suit = cards[i].suit;
     const nextSuit = cards[i + 1].suit;
 
     if (suit !== nextSuit) {
-      return false;
+      return {
+        result: false,
+        cards: [],
+      };
     }
   }
 
-  return true;
+  return {
+    result: true,
+    cards: cards.map((card) => {
+      return { ...card, scored: true };
+    }),
+  };
 };
 
-type Result = {
-  result: boolean;
-  cards: PlayedCard[];
-};
 const isFourOfAKind = (cards: Card[]): Result => {
   let ranksHeld = new Map<number, { numHeld: number; indices: number[] }>();
   for (let i = 0; i < cards.length; ++i) {
@@ -94,7 +136,7 @@ type PlayedCard = Card & {
 
 type PokerHand = {
   name: PokerHandNames;
-  cards: Card[];
+  cards: PlayedCard[];
 };
 
 export class HeldHand {
@@ -112,16 +154,18 @@ export class HeldHand {
     });
     const availableHands: PokerHand[] = [];
     const fourOfAKind = isFourOfAKind(this.cards);
-    if (isFlush(this.cards)) {
-      if (isRoyal(this.cards)) {
+    const flush = isFlush(this.cards);
+    if (flush.result) {
+      const royal = isRoyal(this.cards);
+      if (royal.result) {
         availableHands.push({
           name: POKER_HAND_NAMES.ROYAL_FLUSH,
-          cards: this.cards,
+          cards: royal.cards,
         });
-      } else if (isStraight(this.cards)) {
+      } else if (isStraight(this.cards).result) {
         availableHands.push({
           name: POKER_HAND_NAMES.STRAIGHT_FLUSH,
-          cards: this.cards,
+          cards: flush.cards,
         });
       }
     } else if (fourOfAKind.result) {

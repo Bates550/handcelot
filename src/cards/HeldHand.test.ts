@@ -17,7 +17,13 @@ describe("HeldHand", () => {
       expect(hand.availableHands()).toEqual([
         {
           name: POKER_HAND_NAMES.ROYAL_FLUSH,
-          cards,
+          cards: [
+            { ...C.TEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.ACE_OF_SPADES, scored: true },
+          ],
         },
       ]);
     });
@@ -36,7 +42,13 @@ describe("HeldHand", () => {
       expect(hand.availableHands()).toEqual([
         {
           name: POKER_HAND_NAMES.STRAIGHT_FLUSH,
-          cards,
+          cards: [
+            { ...C.NINE_OF_SPADES, scored: true },
+            { ...C.TEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: true },
+          ],
         },
       ]);
     });
