@@ -1,10 +1,13 @@
 export const SUIT = {
-  HEARTS: "hearts",
-  DIAMONDS: "diamonds",
   CLUBS: "clubs",
+  DIAMONDS: "diamonds",
+  HEARTS: "hearts",
   SPADES: "spades",
 } as const;
 export type Suit = (typeof SUIT)[keyof typeof SUIT];
+
+// It's alphabetical
+export const SUIT_ORDER = [SUIT.CLUBS, SUIT.DIAMONDS, SUIT.HEARTS, SUIT.SPADES];
 
 export class Card {
   suit: Suit;

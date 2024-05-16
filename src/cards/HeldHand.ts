@@ -117,6 +117,11 @@ const isFourOfAKind = (cards: Card[]): Result => {
   };
 };
 
+// const isFullHouse = (cards: Card[]): Result => {
+//   if (isTwoPair(cards).result && isThreePair(cards).result) {
+//   }
+// }
+
 export const POKER_HAND_NAMES = {
   ROYAL_FLUSH: "royalFlush",
   STRAIGHT_FLUSH: "straightFlush",
@@ -155,6 +160,7 @@ export class HeldHand {
     const availableHands: PokerHand[] = [];
     const fourOfAKind = isFourOfAKind(this.cards);
     const flush = isFlush(this.cards);
+    // const fullHouse = isFullHouse(this.cards);
     if (flush.result) {
       const royal = isRoyal(this.cards);
       if (royal.result) {
@@ -174,6 +180,12 @@ export class HeldHand {
         cards: fourOfAKind.cards,
       });
     }
+    // } else if (fullHouse.result) {
+    //   availableHands.push({
+    //     name: POKER_HAND_NAMES.FULL_HOUSE,
+    //     cards: fullHouse.cards,
+    //   });
+    // }
 
     return availableHands;
   }
