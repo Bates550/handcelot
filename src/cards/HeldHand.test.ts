@@ -118,11 +118,11 @@ describe("HeldHand", () => {
         {
           name: POKER_HAND_NAMES.FLUSH,
           cards: [
-            { ...C.FIVE_OF_SPADES, scored: true },
-            { ...C.JACK_OF_SPADES, scored: true },
-            { ...C.QUEEN_OF_SPADES, scored: true },
-            { ...C.KING_OF_SPADES, scored: true },
             { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.FIVE_OF_SPADES, scored: true },
           ],
         },
       ]);

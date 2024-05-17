@@ -1,4 +1,5 @@
-import { Card } from "./Card";
+import { Suit } from "../Card";
+import { Card, SUIT } from "./Card";
 
 type Result = {
   result: boolean;
@@ -153,39 +154,53 @@ export class HeldHand {
     this.cards = cards;
   }
 
+  // Returns available hands. Each hand is sorted by card rank, not necessarily
+  // the order in the held hand.
   availableHands(): PokerHand[] {
-    this.cards.sort((a, b) => {
-      return a.rank - b.rank;
+    // Sort highest to lowest so that when we iterate through we're assembling
+    // the highest rank of any hand.
+    const cards = [...this.cards];
+    cards.sort((a, b) => {
+      const aRank = a.rank === 1 ? 14 : a.rank;
+      const bRank = b.rank === 1 ? 14 : b.rank;
+      return bRank - aRank;
     });
+    console.log(cards);
+
+    const flushes: Record<Suit, Card[]> = {
+      [SUIT.CLUBS]: [],
+      [SUIT.DIAMONDS]: [],
+      [SUIT.HEARTS]: [],
+      [SUIT.SPADES]: [],
+    };
+
     const availableHands: PokerHand[] = [];
-    const fourOfAKind = isFourOfAKind(this.cards);
-    const flush = isFlush(this.cards);
-    // const fullHouse = isFullHouse(this.cards);
-    if (flush.result) {
-      const royal = isRoyal(this.cards);
-      if (royal.result) {
-        availableHands.push({
-          name: POKER_HAND_NAMES.ROYAL_FLUSH,
-          cards: royal.cards,
+
+    for (let i = 0; i < cards.length; ++i) {
+      const card = cards[i];
+
+      // Flush Tracking
+      flushes[card.suit].push(card);
+    }
+
+    const flushSuits = Object.keys(flushes) as Suit[];
+    for (let i = 0; i < flushSuits.length; ++i) {
+      const flushSuit = flushSuits[i];
+      const flush = flushes[flushSuit];
+      if (flush.length >= 5) {
+        const playedCards: PlayedCard[] = flush.map((card) => {
+          return {
+            ...card,
+            scored: true,
+          };
         });
-      } else if (isStraight(this.cards).result) {
+
         availableHands.push({
-          name: POKER_HAND_NAMES.STRAIGHT_FLUSH,
-          cards: flush.cards,
+          name: POKER_HAND_NAMES.FLUSH,
+          cards: playedCards,
         });
       }
-    } else if (fourOfAKind.result) {
-      availableHands.push({
-        name: POKER_HAND_NAMES.FOUR_OF_A_KIND,
-        cards: fourOfAKind.cards,
-      });
     }
-    // } else if (fullHouse.result) {
-    //   availableHands.push({
-    //     name: POKER_HAND_NAMES.FULL_HOUSE,
-    //     cards: fullHouse.cards,
-    //   });
-    // }
 
     return availableHands;
   }
