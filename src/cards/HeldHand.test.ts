@@ -43,11 +43,31 @@ describe("HeldHand", () => {
         {
           name: POKER_HAND_NAMES.STRAIGHT_FLUSH,
           cards: [
-            { ...C.NINE_OF_SPADES, scored: true },
-            { ...C.TEN_OF_SPADES, scored: true },
-            { ...C.JACK_OF_SPADES, scored: true },
-            { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.TEN_OF_SPADES, scored: true },
+            { ...C.NINE_OF_SPADES, scored: true },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.FLUSH,
+          cards: [
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.TEN_OF_SPADES, scored: true },
+            { ...C.NINE_OF_SPADES, scored: true },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.STRAIGHT,
+          cards: [
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.TEN_OF_SPADES, scored: true },
+            { ...C.NINE_OF_SPADES, scored: true },
           ],
         },
       ]);

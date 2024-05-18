@@ -189,7 +189,6 @@ export class HeldHand {
 
       return rankComparison;
     });
-    console.log(cards);
 
     const flushes: Record<Suit, Card[]> = {
       [SUIT.CLUBS]: [],
@@ -197,8 +196,8 @@ export class HeldHand {
       [SUIT.HEARTS]: [],
       [SUIT.SPADES]: [],
     };
-
     const straight: Card[] = [];
+    const straightFlush: Card[] = [];
 
     const availableHands: PokerHand[] = [];
 
@@ -217,6 +216,21 @@ export class HeldHand {
           straight.push(card);
         } else if (card.rank < prevCard.rank - 1) {
           straight.length = 0;
+        }
+      }
+
+      // Straight Flush Tracking
+      if (i === 0) {
+        straightFlush.push(card);
+      } else {
+        const prevCard = cards[i - 1];
+        if (card.rank === prevCard.rank - 1 && card.suit === prevCard.suit) {
+          straightFlush.push(card);
+        } else if (
+          card.rank < prevCard.rank - 1 ||
+          card.suit !== prevCard.suit
+        ) {
+          straightFlush.length = 0;
         }
       }
     }
@@ -255,6 +269,36 @@ export class HeldHand {
         cards: playedCards,
       });
     }
+
+    // Straight Flush Evaluation
+    if (straightFlush.length >= 5) {
+      const playedCards: PlayedCard[] = straightFlush.map((card) => {
+        return {
+          ...card,
+          scored: true,
+        };
+      });
+
+      availableHands.push({
+        name: POKER_HAND_NAMES.STRAIGHT_FLUSH,
+        cards: playedCards,
+      });
+    }
+
+    availableHands.sort((a, b) => {
+      const handPrecedence = Object.values(POKER_HAND_NAMES);
+      const aName = handPrecedence.findIndex((handName) => a.name === handName);
+      const bName = handPrecedence.findIndex((handName) => b.name === handName);
+
+      if (aName === -1) {
+        throw new Error(`Could not find ${aName} in ${handPrecedence}`);
+      }
+      if (bName === -1) {
+        throw new Error(`Could not find ${bName} in ${handPrecedence}`);
+      }
+
+      return aName - bName;
+    });
 
     return availableHands;
   }
