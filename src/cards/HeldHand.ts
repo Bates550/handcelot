@@ -154,16 +154,40 @@ export class HeldHand {
     this.cards = cards;
   }
 
-  // Returns available hands. Each hand is sorted by card rank, not necessarily
-  // the order in the held hand.
+  // Returns available hands. Each hand is sorted by descending rank and then by
+  // descending alpha suit, not necessarily the order in the held hand.
   availableHands(): PokerHand[] {
     // Sort highest to lowest so that when we iterate through we're assembling
     // the highest rank of any hand.
     const cards = [...this.cards];
+
+    // Sort by descending rank, but starting with Ace
     cards.sort((a, b) => {
       const aRank = a.rank === 1 ? 14 : a.rank;
       const bRank = b.rank === 1 ? 14 : b.rank;
-      return bRank - aRank;
+      const rankComparison = bRank - aRank;
+
+      const suitOrder: Suit[] = [
+        SUIT.SPADES,
+        SUIT.HEARTS,
+        SUIT.DIAMONDS,
+        SUIT.CLUBS,
+      ];
+      if (rankComparison === 0) {
+        const aSuit = suitOrder.findIndex((suit) => a.suit === suit);
+        const bSuit = suitOrder.findIndex((suit) => b.suit === suit);
+
+        if (aSuit === -1) {
+          throw new Error(`Could not find ${aSuit} in ${suitOrder}`);
+        }
+        if (bSuit === -1) {
+          throw new Error(`Could not find ${bSuit} in ${suitOrder}`);
+        }
+
+        return aSuit - bSuit;
+      }
+
+      return rankComparison;
     });
     console.log(cards);
 
@@ -174,6 +198,8 @@ export class HeldHand {
       [SUIT.SPADES]: [],
     };
 
+    const straight: Card[] = [];
+
     const availableHands: PokerHand[] = [];
 
     for (let i = 0; i < cards.length; ++i) {
@@ -181,8 +207,21 @@ export class HeldHand {
 
       // Flush Tracking
       flushes[card.suit].push(card);
+
+      // Straight Tracking
+      if (i === 0) {
+        straight.push(card);
+      } else {
+        const prevCard = cards[i - 1];
+        if (card.rank === prevCard.rank - 1) {
+          straight.push(card);
+        } else if (card.rank < prevCard.rank - 1) {
+          straight.length = 0;
+        }
+      }
     }
 
+    // Flush Evaluation
     const flushSuits = Object.keys(flushes) as Suit[];
     for (let i = 0; i < flushSuits.length; ++i) {
       const flushSuit = flushSuits[i];
@@ -200,6 +239,21 @@ export class HeldHand {
           cards: playedCards,
         });
       }
+    }
+
+    // Straight Evaluation
+    if (straight.length >= 5) {
+      const playedCards: PlayedCard[] = straight.map((card) => {
+        return {
+          ...card,
+          scored: true,
+        };
+      });
+
+      availableHands.push({
+        name: POKER_HAND_NAMES.STRAIGHT,
+        cards: playedCards,
+      });
     }
 
     return availableHands;

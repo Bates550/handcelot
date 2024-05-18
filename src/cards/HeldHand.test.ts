@@ -130,11 +130,12 @@ describe("HeldHand", () => {
 
     it("detects straight", () => {
       const cards = [
+        C.NINE_OF_HEARTS,
+        C.TEN_OF_CLUBS,
         C.TEN_OF_HEARTS,
         C.JACK_OF_SPADES,
         C.QUEEN_OF_SPADES,
         C.KING_OF_SPADES,
-        C.ACE_OF_SPADES,
       ];
 
       const hand = new HeldHand({ cards });
@@ -143,12 +144,11 @@ describe("HeldHand", () => {
         {
           name: POKER_HAND_NAMES.STRAIGHT,
           cards: [
-            { ...C.NINE_OF_HEARTS, scored: true },
-            { ...C.TEN_OF_SPADES, scored: true },
-            { ...C.JACK_OF_SPADES, scored: true },
-            { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.KING_OF_SPADES, scored: true },
-            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.TEN_OF_HEARTS, scored: true },
+            { ...C.NINE_OF_HEARTS, scored: true },
           ],
         },
       ]);
