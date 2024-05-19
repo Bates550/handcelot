@@ -18,11 +18,31 @@ describe("HeldHand", () => {
         {
           name: POKER_HAND_NAMES.ROYAL_FLUSH,
           cards: [
-            { ...C.TEN_OF_SPADES, scored: true },
-            { ...C.JACK_OF_SPADES, scored: true },
-            { ...C.QUEEN_OF_SPADES, scored: true },
-            { ...C.KING_OF_SPADES, scored: true },
             { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.TEN_OF_SPADES, scored: true },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.FLUSH,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.TEN_OF_SPADES, scored: true },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.STRAIGHT,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.TEN_OF_SPADES, scored: true },
           ],
         },
       ]);
@@ -169,6 +189,32 @@ describe("HeldHand", () => {
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_HEARTS, scored: true },
             { ...C.NINE_OF_HEARTS, scored: true },
+          ],
+        },
+      ]);
+    });
+
+    it("detects 'royal' straight as a straight", () => {
+      const cards = [
+        C.TEN_OF_CLUBS,
+        C.TEN_OF_HEARTS,
+        C.JACK_OF_SPADES,
+        C.QUEEN_OF_SPADES,
+        C.KING_OF_SPADES,
+        C.ACE_OF_SPADES,
+      ];
+
+      const hand = new HeldHand({ cards });
+
+      expect(hand.availableHands()).toEqual([
+        {
+          name: POKER_HAND_NAMES.STRAIGHT,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.TEN_OF_HEARTS, scored: true },
           ],
         },
       ]);

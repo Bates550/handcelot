@@ -197,7 +197,7 @@ export class HeldHand {
       [SUIT.SPADES]: [],
     };
     const straight: Card[] = [];
-    const straightFlush: Card[] = [];
+    const straightFlush: Card[] = []; // Includes royal flushes as well
 
     const availableHands: PokerHand[] = [];
 
@@ -212,19 +212,24 @@ export class HeldHand {
         straight.push(card);
       } else {
         const prevCard = cards[i - 1];
-        if (card.rank === prevCard.rank - 1) {
+        const aceThenKing = card.rank === 13 && prevCard.rank === 1;
+        const descendingRank = card.rank === prevCard.rank - 1 || aceThenKing;
+        if (descendingRank) {
           straight.push(card);
         } else if (card.rank < prevCard.rank - 1) {
           straight.length = 0;
         }
       }
 
-      // Straight Flush Tracking
+      // Straight Flush and Royal Flush Tracking
       if (i === 0) {
         straightFlush.push(card);
       } else {
         const prevCard = cards[i - 1];
-        if (card.rank === prevCard.rank - 1 && card.suit === prevCard.suit) {
+        const sameSuit = card.suit === prevCard.suit;
+        const aceThenKing = card.rank === 13 && prevCard.rank === 1;
+        const descendingRank = card.rank === prevCard.rank - 1 || aceThenKing;
+        if (descendingRank && sameSuit) {
           straightFlush.push(card);
         } else if (
           card.rank < prevCard.rank - 1 ||
@@ -270,7 +275,7 @@ export class HeldHand {
       });
     }
 
-    // Straight Flush Evaluation
+    // Straight Flush and Royal Flush Evaluation
     if (straightFlush.length >= 5) {
       const playedCards: PlayedCard[] = straightFlush.map((card) => {
         return {
@@ -279,8 +284,12 @@ export class HeldHand {
         };
       });
 
+      const isRoyal = straightFlush[0].rank === 1;
+      const name = isRoyal
+        ? POKER_HAND_NAMES.ROYAL_FLUSH
+        : POKER_HAND_NAMES.STRAIGHT_FLUSH;
       availableHands.push({
-        name: POKER_HAND_NAMES.STRAIGHT_FLUSH,
+        name,
         cards: playedCards,
       });
     }
