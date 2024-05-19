@@ -207,35 +207,20 @@ export class HeldHand {
       // Flush Tracking
       flushes[card.suit].push(card);
 
-      // Straight Tracking
+      // Straight, Straight Flush, and Royal Flush Tracking
       if (i === 0) {
         straight.push(card);
-      } else {
-        const prevCard = cards[i - 1];
-        const aceThenKing = card.rank === 13 && prevCard.rank === 1;
-        const descendingRank = card.rank === prevCard.rank - 1 || aceThenKing;
-        if (descendingRank) {
-          straight.push(card);
-        } else if (card.rank < prevCard.rank - 1) {
-          straight.length = 0;
-        }
-      }
-
-      // Straight Flush and Royal Flush Tracking
-      if (i === 0) {
         straightFlush.push(card);
       } else {
         const prevCard = cards[i - 1];
         const sameSuit = card.suit === prevCard.suit;
         const aceThenKing = card.rank === 13 && prevCard.rank === 1;
         const descendingRank = card.rank === prevCard.rank - 1 || aceThenKing;
-        if (descendingRank && sameSuit) {
-          straightFlush.push(card);
-        } else if (
-          card.rank < prevCard.rank - 1 ||
-          card.suit !== prevCard.suit
-        ) {
-          straightFlush.length = 0;
+        if (descendingRank) {
+          straight.push(card);
+          if (sameSuit) {
+            straightFlush.push(card);
+          }
         }
       }
     }
