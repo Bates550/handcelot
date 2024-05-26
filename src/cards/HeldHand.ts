@@ -1,5 +1,5 @@
 import { Suit } from "../Card";
-import { Card, SUIT } from "./Card";
+import { Card, RANK, Rank, SUIT } from "./Card";
 
 type Result = {
   result: boolean;
@@ -154,14 +154,9 @@ export class HeldHand {
     this.cards = cards;
   }
 
-  // Returns available hands. Each hand is sorted by descending rank and then by
-  // descending alpha suit, not necessarily the order in the held hand.
-  availableHands(): PokerHand[] {
-    // Sort highest to lowest so that when we iterate through we're assembling
-    // the highest rank of any hand.
-    const cards = [...this.cards];
-
-    // Sort by descending rank, but starting with Ace
+  // Sort in place by descending rank, but starting with Ace
+  // Matching ranks are sorted by suit in reverse alphabetical order.
+  private static sortByRankDesc(cards: Card[]) {
     cards.sort((a, b) => {
       const aRank = a.rank === 1 ? 14 : a.rank;
       const bRank = b.rank === 1 ? 14 : b.rank;
@@ -189,12 +184,36 @@ export class HeldHand {
 
       return rankComparison;
     });
+  }
+
+  // Returns available hands. Each hand is sorted by descending rank and then by
+  // descending alpha suit, not necessarily the order in the held hand.
+  availableHands(): PokerHand[] {
+    // Sort highest to lowest so that when we iterate through we're assembling
+    // the highest rank of any hand.
+    const cards = [...this.cards];
+    HeldHand.sortByRankDesc(cards);
 
     const flushes: Record<Suit, Card[]> = {
       [SUIT.CLUBS]: [],
       [SUIT.DIAMONDS]: [],
       [SUIT.HEARTS]: [],
       [SUIT.SPADES]: [],
+    };
+    const rankMatches: Record<Rank, Card[]> = {
+      [RANK.ACE]: [],
+      [RANK.TWO]: [],
+      [RANK.THREE]: [],
+      [RANK.FOUR]: [],
+      [RANK.FIVE]: [],
+      [RANK.SIX]: [],
+      [RANK.SEVEN]: [],
+      [RANK.EIGHT]: [],
+      [RANK.NINE]: [],
+      [RANK.TEN]: [],
+      [RANK.JACK]: [],
+      [RANK.QUEEN]: [],
+      [RANK.KING]: [],
     };
     const straight: Card[] = [];
     const straightFlush: Card[] = []; // Includes royal flushes as well
@@ -203,6 +222,9 @@ export class HeldHand {
 
     for (let i = 0; i < cards.length; ++i) {
       const card = cards[i];
+
+      // Rank Match Tracking
+      rankMatches[card.rank].push(card);
 
       // Flush Tracking
       flushes[card.suit].push(card);
@@ -222,6 +244,30 @@ export class HeldHand {
             straightFlush.push(card);
           }
         }
+      }
+    }
+
+    // Rank Match Evaluation
+    const ranks = Object.keys(rankMatches).map((rankStr) =>
+      parseInt(rankStr)
+    ) as Rank[];
+    for (let i = 0; i < ranks.length; ++i) {
+      const rank = ranks[i];
+      const rankMatch = rankMatches[rank];
+
+      if (rankMatch.length === 4) {
+        const playedCards: PlayedCard[] = cards.map((card) => {
+          const rankMatchCard = rankMatch.find((rmc) => Card.equals(rmc, card));
+          if (rankMatchCard === undefined) {
+            return { ...card, scored: false };
+          }
+          return { ...card, scored: true };
+        });
+
+        availableHands.push({
+          name: POKER_HAND_NAMES.FOUR_OF_A_KIND,
+          cards: playedCards,
+        });
       }
     }
 
