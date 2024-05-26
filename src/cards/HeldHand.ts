@@ -257,7 +257,7 @@ export class HeldHand {
 
       if (rankMatch.length === 4) {
         const playedCards: PlayedCard[] = cards.map((card) => {
-          const rankMatchCard = rankMatch.find((rmc) => Card.equals(rmc, card));
+          const rankMatchCard = rankMatch.find((c) => Card.equals(c, card));
           if (rankMatchCard === undefined) {
             return { ...card, scored: false };
           }
@@ -272,7 +272,7 @@ export class HeldHand {
 
       if (rankMatch.length === 3) {
         const playedCards: PlayedCard[] = cards.map((card) => {
-          const rankMatchCard = rankMatch.find((rmc) => Card.equals(rmc, card));
+          const rankMatchCard = rankMatch.find((c) => Card.equals(c, card));
           if (rankMatchCard === undefined) {
             return { ...card, scored: false };
           }
@@ -287,7 +287,7 @@ export class HeldHand {
 
       if (rankMatch.length === 2) {
         const playedCards: PlayedCard[] = cards.map((card) => {
-          const rankMatchCard = rankMatch.find((rmc) => Card.equals(rmc, card));
+          const rankMatchCard = rankMatch.find((c) => Card.equals(c, card));
           if (rankMatchCard === undefined) {
             return { ...card, scored: false };
           }
@@ -323,11 +323,12 @@ export class HeldHand {
 
     // Straight Evaluation
     if (straight.length >= 5) {
-      const playedCards: PlayedCard[] = straight.map((card) => {
-        return {
-          ...card,
-          scored: true,
-        };
+      const playedCards: PlayedCard[] = cards.map((card) => {
+        const straightCard = straight.find((c) => Card.equals(c, card));
+        if (straightCard === undefined) {
+          return { ...card, scored: false };
+        }
+        return { ...card, scored: true };
       });
 
       availableHands.push({
@@ -338,11 +339,14 @@ export class HeldHand {
 
     // Straight Flush and Royal Flush Evaluation
     if (straightFlush.length >= 5) {
-      const playedCards: PlayedCard[] = straightFlush.map((card) => {
-        return {
-          ...card,
-          scored: true,
-        };
+      const playedCards: PlayedCard[] = cards.map((card) => {
+        const straightFlushCard = straightFlush.find((c) =>
+          Card.equals(c, card)
+        );
+        if (straightFlushCard === undefined) {
+          return { ...card, scored: false };
+        }
+        return { ...card, scored: true };
       });
 
       const isRoyal = straightFlush[0].rank === 1;

@@ -168,7 +168,7 @@ describe("HeldHand", () => {
       ]);
     });
 
-    it.only("detects straight", () => {
+    it("detects straight", () => {
       const cards = [
         C.NINE_OF_HEARTS,
         C.TEN_OF_CLUBS,
@@ -188,7 +188,7 @@ describe("HeldHand", () => {
             { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_HEARTS, scored: true },
-            // { ...C.TEN_OF_CLUBS, scored: false },
+            { ...C.TEN_OF_CLUBS, scored: false },
             { ...C.NINE_OF_HEARTS, scored: true },
           ],
         },
@@ -206,7 +206,7 @@ describe("HeldHand", () => {
       ]);
     });
 
-    it.only("detects 'royal' straight as a straight", () => {
+    it("detects 'royal' straight as a straight", () => {
       const cards = [
         C.TEN_OF_CLUBS,
         C.TEN_OF_HEARTS,
@@ -227,7 +227,7 @@ describe("HeldHand", () => {
             { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_HEARTS, scored: true },
-            // { ...C.TEN_OF_CLUBS, scored: false },
+            { ...C.TEN_OF_CLUBS, scored: false },
           ],
         },
         {
