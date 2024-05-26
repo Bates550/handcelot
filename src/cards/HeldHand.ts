@@ -307,11 +307,12 @@ export class HeldHand {
       const flushSuit = flushSuits[i];
       const flush = flushes[flushSuit];
       if (flush.length >= 5) {
-        const playedCards: PlayedCard[] = flush.map((card) => {
-          return {
-            ...card,
-            scored: true,
-          };
+        const playedCards: PlayedCard[] = cards.map((card) => {
+          const flushCard = flush.find((c) => Card.equals(c, card));
+          if (flushCard === undefined) {
+            return { ...card, scored: false };
+          }
+          return { ...card, scored: true };
         });
 
         availableHands.push({

@@ -5,6 +5,7 @@ describe("HeldHand", () => {
   describe("availableHands", () => {
     it("detects royal flush", () => {
       const cards = [
+        C.TWO_OF_HEARTS,
         C.TEN_OF_SPADES,
         C.JACK_OF_SPADES,
         C.QUEEN_OF_SPADES,
@@ -23,6 +24,7 @@ describe("HeldHand", () => {
             { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_SPADES, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
         {
@@ -33,6 +35,7 @@ describe("HeldHand", () => {
             { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_SPADES, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
         {
@@ -43,6 +46,7 @@ describe("HeldHand", () => {
             { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_SPADES, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
       ]);
@@ -50,6 +54,7 @@ describe("HeldHand", () => {
 
     it("detects straight flush", () => {
       const cards = [
+        C.TWO_OF_HEARTS,
         C.NINE_OF_SPADES,
         C.TEN_OF_SPADES,
         C.JACK_OF_SPADES,
@@ -68,6 +73,7 @@ describe("HeldHand", () => {
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_SPADES, scored: true },
             { ...C.NINE_OF_SPADES, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
         {
@@ -78,6 +84,7 @@ describe("HeldHand", () => {
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_SPADES, scored: true },
             { ...C.NINE_OF_SPADES, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
         {
@@ -88,6 +95,7 @@ describe("HeldHand", () => {
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_SPADES, scored: true },
             { ...C.NINE_OF_SPADES, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
       ]);
@@ -145,6 +153,7 @@ describe("HeldHand", () => {
 
     it("detects flush", () => {
       const cards = [
+        C.TWO_OF_HEARTS,
         C.FIVE_OF_SPADES,
         C.JACK_OF_SPADES,
         C.QUEEN_OF_SPADES,
@@ -163,6 +172,7 @@ describe("HeldHand", () => {
             { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.FIVE_OF_SPADES, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
       ]);
