@@ -269,6 +269,36 @@ export class HeldHand {
           cards: playedCards,
         });
       }
+
+      if (rankMatch.length === 3) {
+        const playedCards: PlayedCard[] = cards.map((card) => {
+          const rankMatchCard = rankMatch.find((rmc) => Card.equals(rmc, card));
+          if (rankMatchCard === undefined) {
+            return { ...card, scored: false };
+          }
+          return { ...card, scored: true };
+        });
+
+        availableHands.push({
+          name: POKER_HAND_NAMES.THREE_OF_A_KIND,
+          cards: playedCards,
+        });
+      }
+
+      if (rankMatch.length === 2) {
+        const playedCards: PlayedCard[] = cards.map((card) => {
+          const rankMatchCard = rankMatch.find((rmc) => Card.equals(rmc, card));
+          if (rankMatchCard === undefined) {
+            return { ...card, scored: false };
+          }
+          return { ...card, scored: true };
+        });
+
+        availableHands.push({
+          name: POKER_HAND_NAMES.PAIR,
+          cards: playedCards,
+        });
+      }
     }
 
     // Flush Evaluation

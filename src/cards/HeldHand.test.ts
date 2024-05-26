@@ -235,11 +235,11 @@ describe("HeldHand", () => {
         {
           name: POKER_HAND_NAMES.THREE_OF_A_KIND,
           cards: [
-            { ...C.ACE_OF_CLUBS, scored: true },
-            { ...C.ACE_OF_HEARTS, scored: true },
             { ...C.ACE_OF_SPADES, scored: true },
-            { ...C.TWO_OF_DIAMONDS, scored: false },
+            { ...C.ACE_OF_HEARTS, scored: true },
+            { ...C.ACE_OF_CLUBS, scored: true },
             { ...C.THREE_OF_DIAMONDS, scored: false },
+            { ...C.TWO_OF_DIAMONDS, scored: false },
           ],
         },
       ]);
@@ -285,11 +285,11 @@ describe("HeldHand", () => {
         {
           name: POKER_HAND_NAMES.PAIR,
           cards: [
-            { ...C.ACE_OF_CLUBS, scored: true },
             { ...C.ACE_OF_SPADES, scored: true },
-            { ...C.TWO_OF_DIAMONDS, scored: false },
-            { ...C.THREE_OF_DIAMONDS, scored: false },
+            { ...C.ACE_OF_CLUBS, scored: true },
             { ...C.FOUR_OF_DIAMONDS, scored: false },
+            { ...C.THREE_OF_DIAMONDS, scored: false },
+            { ...C.TWO_OF_DIAMONDS, scored: false },
           ],
         },
       ]);
