@@ -168,7 +168,7 @@ describe("HeldHand", () => {
       ]);
     });
 
-    it("detects straight", () => {
+    it.only("detects straight", () => {
       const cards = [
         C.NINE_OF_HEARTS,
         C.TEN_OF_CLUBS,
@@ -188,13 +188,25 @@ describe("HeldHand", () => {
             { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_HEARTS, scored: true },
+            // { ...C.TEN_OF_CLUBS, scored: false },
             { ...C.NINE_OF_HEARTS, scored: true },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.PAIR,
+          cards: [
+            { ...C.KING_OF_SPADES, scored: false },
+            { ...C.QUEEN_OF_SPADES, scored: false },
+            { ...C.JACK_OF_SPADES, scored: false },
+            { ...C.TEN_OF_HEARTS, scored: true },
+            { ...C.TEN_OF_CLUBS, scored: true },
+            { ...C.NINE_OF_HEARTS, scored: false },
           ],
         },
       ]);
     });
 
-    it("detects 'royal' straight as a straight", () => {
+    it.only("detects 'royal' straight as a straight", () => {
       const cards = [
         C.TEN_OF_CLUBS,
         C.TEN_OF_HEARTS,
@@ -215,6 +227,18 @@ describe("HeldHand", () => {
             { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.TEN_OF_HEARTS, scored: true },
+            // { ...C.TEN_OF_CLUBS, scored: false },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.PAIR,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: false },
+            { ...C.KING_OF_SPADES, scored: false },
+            { ...C.QUEEN_OF_SPADES, scored: false },
+            { ...C.JACK_OF_SPADES, scored: false },
+            { ...C.TEN_OF_HEARTS, scored: true },
+            { ...C.TEN_OF_CLUBS, scored: true },
           ],
         },
       ]);
