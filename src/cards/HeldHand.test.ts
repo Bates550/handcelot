@@ -128,6 +128,7 @@ describe("HeldHand", () => {
 
     it("detects full house", () => {
       const cards = [
+        C.TWO_OF_HEARTS,
         C.ACE_OF_CLUBS,
         C.ACE_OF_DIAMONDS,
         C.ACE_OF_HEARTS,
@@ -141,11 +142,34 @@ describe("HeldHand", () => {
         {
           name: POKER_HAND_NAMES.FULL_HOUSE,
           cards: [
-            { ...C.ACE_OF_CLUBS, scored: true },
-            { ...C.ACE_OF_DIAMONDS, scored: true },
             { ...C.ACE_OF_HEARTS, scored: true },
-            { ...C.KING_OF_CLUBS, scored: true },
+            { ...C.ACE_OF_DIAMONDS, scored: true },
+            { ...C.ACE_OF_CLUBS, scored: true },
             { ...C.KING_OF_DIAMONDS, scored: true },
+            { ...C.KING_OF_CLUBS, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.THREE_OF_A_KIND,
+          cards: [
+            { ...C.ACE_OF_HEARTS, scored: true },
+            { ...C.ACE_OF_DIAMONDS, scored: true },
+            { ...C.ACE_OF_CLUBS, scored: true },
+            { ...C.KING_OF_DIAMONDS, scored: false },
+            { ...C.KING_OF_CLUBS, scored: false },
+            { ...C.TWO_OF_HEARTS, scored: false },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.PAIR,
+          cards: [
+            { ...C.ACE_OF_HEARTS, scored: false },
+            { ...C.ACE_OF_DIAMONDS, scored: false },
+            { ...C.ACE_OF_CLUBS, scored: false },
+            { ...C.KING_OF_DIAMONDS, scored: true },
+            { ...C.KING_OF_CLUBS, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
       ]);

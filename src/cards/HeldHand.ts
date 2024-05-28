@@ -301,6 +301,39 @@ export class HeldHand {
       }
     }
 
+    // Full House Evaluation
+    // Find the highest three of a kind and pair
+    let maxThreeOfAKind: Card[] | undefined;
+    let maxPair: Card[] | undefined;
+    for (let i = ranks.length - 1; i >= 0; --i) {
+      const rank = ranks[i];
+      const rankMatch = rankMatches[rank];
+
+      if (maxThreeOfAKind === undefined && rankMatch.length === 3) {
+        maxThreeOfAKind = rankMatch;
+      }
+
+      if (maxPair === undefined && rankMatch.length === 2) {
+        maxPair = rankMatch;
+      }
+    }
+    // If they exist you've got a full house.
+    if (maxPair !== undefined && maxThreeOfAKind !== undefined) {
+      const fullHouseCards = [...maxPair, ...maxThreeOfAKind];
+      const playedCards: PlayedCard[] = cards.map((card) => {
+        const rankMatchCard = fullHouseCards.find((c) => Card.equals(c, card));
+        if (rankMatchCard === undefined) {
+          return { ...card, scored: false };
+        }
+        return { ...card, scored: true };
+      });
+
+      availableHands.push({
+        name: POKER_HAND_NAMES.FULL_HOUSE,
+        cards: playedCards,
+      });
+    }
+
     // Flush Evaluation
     const flushSuits = Object.keys(flushes) as Suit[];
     for (let i = 0; i < flushSuits.length; ++i) {
