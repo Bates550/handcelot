@@ -154,8 +154,8 @@ export class HeldHand {
     this.cards = cards;
   }
 
-  // Sort in place by descending rank, but starting with Ace
-  // Matching ranks are sorted by suit in reverse alphabetical order.
+  // Sort in place by descending rank (i.e. A, K, Q, J, 10, ...), but starting
+  // with Ace Matching ranks are sorted by suit in reverse alphabetical order.
   private static sortByRankDesc(cards: Card[]) {
     cards.sort((a, b) => {
       const aRank = a.rank === 1 ? 14 : a.rank;
@@ -299,6 +299,24 @@ export class HeldHand {
           cards: playedCards,
         });
       }
+    }
+
+    // Two Pair Evaluation
+    const availablePairs = availableHands.filter(
+      (hand) => hand.name === POKER_HAND_NAMES.PAIR
+    );
+    if (availablePairs.length >= 2) {
+      const highestPair = availablePairs[0];
+      const nextHighestPair = availableHands[1];
+      const playedCards: PlayedCard[] = highestPair.cards.map((card, i) => {
+        const nextHighestPairCard = nextHighestPair.cards[i];
+        const scored = card.scored || nextHighestPairCard.scored;
+        return { ...card, scored };
+      });
+      availableHands.push({
+        name: POKER_HAND_NAMES.TWO_PAIR,
+        cards: playedCards,
+      });
     }
 
     // Full House Evaluation
