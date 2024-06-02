@@ -247,6 +247,18 @@ export class HeldHand {
       }
     }
 
+    // High Card Evaluation
+    const highCardPlayedCards: PlayedCard[] = cards.map((card, i) => {
+      if (i === 0) {
+        return { ...card, scored: true };
+      }
+      return { ...card, scored: false };
+    });
+    availableHands.push({
+      name: POKER_HAND_NAMES.HIGH_CARD,
+      cards: highCardPlayedCards,
+    });
+
     // Rank Match Evaluation
     const ranks = Object.keys(rankMatches).map((rankStr) =>
       parseInt(rankStr)
@@ -307,7 +319,7 @@ export class HeldHand {
     );
     if (availablePairs.length >= 2) {
       const highestPair = availablePairs[0];
-      const nextHighestPair = availableHands[1];
+      const nextHighestPair = availablePairs[1];
       const playedCards: PlayedCard[] = highestPair.cards.map((card, i) => {
         const nextHighestPairCard = nextHighestPair.cards[i];
         const scored = card.scored || nextHighestPairCard.scored;

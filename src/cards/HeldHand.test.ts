@@ -49,6 +49,17 @@ describe("HeldHand", () => {
             { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: false },
+            { ...C.QUEEN_OF_SPADES, scored: false },
+            { ...C.JACK_OF_SPADES, scored: false },
+            { ...C.TEN_OF_SPADES, scored: false },
+            { ...C.TWO_OF_HEARTS, scored: false },
+          ],
+        },
       ]);
     });
 
@@ -98,6 +109,17 @@ describe("HeldHand", () => {
             { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: false },
+            { ...C.JACK_OF_SPADES, scored: false },
+            { ...C.TEN_OF_SPADES, scored: false },
+            { ...C.NINE_OF_SPADES, scored: false },
+            { ...C.TWO_OF_HEARTS, scored: false },
+          ],
+        },
       ]);
     });
 
@@ -120,6 +142,16 @@ describe("HeldHand", () => {
             { ...C.ACE_OF_HEARTS, scored: true },
             { ...C.ACE_OF_DIAMONDS, scored: true },
             { ...C.ACE_OF_CLUBS, scored: true },
+            { ...C.TWO_OF_DIAMONDS, scored: false },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.ACE_OF_HEARTS, scored: false },
+            { ...C.ACE_OF_DIAMONDS, scored: false },
+            { ...C.ACE_OF_CLUBS, scored: false },
             { ...C.TWO_OF_DIAMONDS, scored: false },
           ],
         },
@@ -172,6 +204,17 @@ describe("HeldHand", () => {
             { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.ACE_OF_HEARTS, scored: true },
+            { ...C.ACE_OF_DIAMONDS, scored: false },
+            { ...C.ACE_OF_CLUBS, scored: false },
+            { ...C.KING_OF_DIAMONDS, scored: false },
+            { ...C.KING_OF_CLUBS, scored: false },
+            { ...C.TWO_OF_HEARTS, scored: false },
+          ],
+        },
       ]);
     });
 
@@ -196,6 +239,17 @@ describe("HeldHand", () => {
             { ...C.QUEEN_OF_SPADES, scored: true },
             { ...C.JACK_OF_SPADES, scored: true },
             { ...C.FIVE_OF_SPADES, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: false },
+            { ...C.QUEEN_OF_SPADES, scored: false },
+            { ...C.JACK_OF_SPADES, scored: false },
+            { ...C.FIVE_OF_SPADES, scored: false },
             { ...C.TWO_OF_HEARTS, scored: false },
           ],
         },
@@ -237,6 +291,17 @@ describe("HeldHand", () => {
             { ...C.NINE_OF_HEARTS, scored: false },
           ],
         },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: false },
+            { ...C.JACK_OF_SPADES, scored: false },
+            { ...C.TEN_OF_HEARTS, scored: false },
+            { ...C.TEN_OF_CLUBS, scored: false },
+            { ...C.NINE_OF_HEARTS, scored: false },
+          ],
+        },
       ]);
     });
 
@@ -275,6 +340,17 @@ describe("HeldHand", () => {
             { ...C.TEN_OF_CLUBS, scored: true },
           ],
         },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: false },
+            { ...C.QUEEN_OF_SPADES, scored: false },
+            { ...C.JACK_OF_SPADES, scored: false },
+            { ...C.TEN_OF_HEARTS, scored: false },
+            { ...C.TEN_OF_CLUBS, scored: false },
+          ],
+        },
       ]);
     });
 
@@ -296,6 +372,16 @@ describe("HeldHand", () => {
             { ...C.ACE_OF_SPADES, scored: true },
             { ...C.ACE_OF_HEARTS, scored: true },
             { ...C.ACE_OF_CLUBS, scored: true },
+            { ...C.THREE_OF_DIAMONDS, scored: false },
+            { ...C.TWO_OF_DIAMONDS, scored: false },
+          ],
+        },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.ACE_OF_HEARTS, scored: false },
+            { ...C.ACE_OF_CLUBS, scored: false },
             { ...C.THREE_OF_DIAMONDS, scored: false },
             { ...C.TWO_OF_DIAMONDS, scored: false },
           ],
@@ -345,6 +431,16 @@ describe("HeldHand", () => {
             { ...C.TWO_OF_DIAMONDS, scored: true },
           ],
         },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.ACE_OF_CLUBS, scored: false },
+            { ...C.FOUR_OF_DIAMONDS, scored: false },
+            { ...C.TWO_OF_SPADES, scored: false },
+            { ...C.TWO_OF_DIAMONDS, scored: false },
+          ],
+        },
       ]);
     });
 
@@ -370,6 +466,16 @@ describe("HeldHand", () => {
             { ...C.TWO_OF_DIAMONDS, scored: false },
           ],
         },
+        {
+          name: POKER_HAND_NAMES.HIGH_CARD,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.ACE_OF_CLUBS, scored: false },
+            { ...C.FOUR_OF_DIAMONDS, scored: false },
+            { ...C.THREE_OF_DIAMONDS, scored: false },
+            { ...C.TWO_OF_DIAMONDS, scored: false },
+          ],
+        },
       ]);
     });
 
@@ -389,10 +495,10 @@ describe("HeldHand", () => {
           name: POKER_HAND_NAMES.HIGH_CARD,
           cards: [
             { ...C.ACE_OF_CLUBS, scored: true },
-            { ...C.TWO_OF_DIAMONDS, scored: false },
-            { ...C.THREE_OF_DIAMONDS, scored: false },
-            { ...C.FOUR_OF_DIAMONDS, scored: false },
             { ...C.SEVEN_OF_DIAMONDS, scored: false },
+            { ...C.FOUR_OF_DIAMONDS, scored: false },
+            { ...C.THREE_OF_DIAMONDS, scored: false },
+            { ...C.TWO_OF_DIAMONDS, scored: false },
           ],
         },
       ]);
