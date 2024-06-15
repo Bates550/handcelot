@@ -13,9 +13,7 @@ describe("HeldHand", () => {
         C.ACE_OF_SPADES,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.ROYAL_FLUSH,
           cards: [
@@ -73,9 +71,7 @@ describe("HeldHand", () => {
         C.KING_OF_SPADES,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.STRAIGHT_FLUSH,
           cards: [
@@ -132,9 +128,7 @@ describe("HeldHand", () => {
         C.ACE_OF_SPADES,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.FOUR_OF_A_KIND,
           cards: [
@@ -168,9 +162,7 @@ describe("HeldHand", () => {
         C.KING_OF_DIAMONDS,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.FULL_HOUSE,
           cards: [
@@ -228,9 +220,7 @@ describe("HeldHand", () => {
         C.ACE_OF_SPADES,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.FLUSH,
           cards: [
@@ -266,9 +256,7 @@ describe("HeldHand", () => {
         C.KING_OF_SPADES,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.STRAIGHT,
           cards: [
@@ -315,9 +303,7 @@ describe("HeldHand", () => {
         C.ACE_OF_SPADES,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.STRAIGHT,
           cards: [
@@ -363,9 +349,7 @@ describe("HeldHand", () => {
         C.ACE_OF_SPADES,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.THREE_OF_A_KIND,
           cards: [
@@ -398,9 +382,7 @@ describe("HeldHand", () => {
         C.ACE_OF_SPADES,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.TWO_PAIR,
           cards: [
@@ -453,9 +435,7 @@ describe("HeldHand", () => {
         C.ACE_OF_SPADES,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.PAIR,
           cards: [
@@ -488,9 +468,7 @@ describe("HeldHand", () => {
         C.SEVEN_OF_DIAMONDS,
       ];
 
-      const hand = new HeldHand({ cards });
-
-      expect(hand.availableHands()).toEqual([
+      expect(HeldHand.availableHands(cards)).toEqual([
         {
           name: POKER_HAND_NAMES.HIGH_CARD,
           cards: [
@@ -502,6 +480,43 @@ describe("HeldHand", () => {
           ],
         },
       ]);
+    });
+  });
+
+  describe("determineWinningHand", () => {
+    it("returns the better hand", () => {
+      const royalFlush = [
+        C.TWO_OF_HEARTS,
+        C.TEN_OF_SPADES,
+        C.JACK_OF_SPADES,
+        C.QUEEN_OF_SPADES,
+        C.KING_OF_SPADES,
+        C.ACE_OF_SPADES,
+      ];
+      const highCard = [
+        C.ACE_OF_CLUBS,
+        C.TWO_OF_DIAMONDS,
+        C.THREE_OF_DIAMONDS,
+        C.FOUR_OF_DIAMONDS,
+        C.SEVEN_OF_DIAMONDS,
+      ];
+
+      expect(
+        HeldHand.determineWinningHand({ a: royalFlush, b: highCard })
+      ).toEqual({
+        winner: "a",
+        hand: {
+          name: POKER_HAND_NAMES.ROYAL_FLUSH,
+          cards: [
+            { ...C.ACE_OF_SPADES, scored: true },
+            { ...C.KING_OF_SPADES, scored: true },
+            { ...C.QUEEN_OF_SPADES, scored: true },
+            { ...C.JACK_OF_SPADES, scored: true },
+            { ...C.TEN_OF_SPADES, scored: true },
+            { ...C.TWO_OF_HEARTS, scored: false },
+          ],
+        },
+      });
     });
   });
 });

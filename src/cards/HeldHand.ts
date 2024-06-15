@@ -1,128 +1,6 @@
 import { Suit } from "../Card";
 import { Card, RANK, Rank, SUIT } from "./Card";
 
-type Result = {
-  result: boolean;
-  cards: PlayedCard[];
-};
-
-const isRoyal = (cards: Card[]): Result => {
-  const ranks = cards.map((card) => card.rank);
-  const hasStraightRoyals =
-    ranks.includes(1) && // A
-    ranks.includes(13) && // K
-    ranks.includes(12) && // Q
-    ranks.includes(11) && // J
-    ranks.includes(10);
-
-  const royalRanks = [1, 13, 12, 11, 10];
-  if (hasStraightRoyals) {
-    const playedCards: PlayedCard[] = cards.map((card) => {
-      return {
-        ...card,
-        scored: royalRanks.includes(card.rank),
-      };
-    });
-
-    // Put ace on the end
-    const ace = playedCards[0];
-    playedCards.shift();
-    playedCards.push(ace);
-
-    return {
-      result: true,
-      cards: playedCards,
-    };
-  }
-
-  return {
-    result: false,
-    cards: [],
-  };
-};
-
-const isStraight = (cards: Card[]): Result => {
-  for (let i = 0; i < cards.length - 1; ++i) {
-    const rank = cards[i].rank;
-    const nextRank = cards[i + 1].rank;
-
-    if (rank + 1 !== nextRank) {
-      return {
-        result: false,
-        cards: [],
-      };
-    }
-  }
-
-  return {
-    result: true,
-    cards: cards.map((card) => {
-      return { ...card, scored: true };
-    }),
-  };
-};
-
-const isFlush = (cards: Card[]): Result => {
-  for (let i = 0; i < cards.length - 1; ++i) {
-    const suit = cards[i].suit;
-    const nextSuit = cards[i + 1].suit;
-
-    if (suit !== nextSuit) {
-      return {
-        result: false,
-        cards: [],
-      };
-    }
-  }
-
-  return {
-    result: true,
-    cards: cards.map((card) => {
-      return { ...card, scored: true };
-    }),
-  };
-};
-
-const isFourOfAKind = (cards: Card[]): Result => {
-  let ranksHeld = new Map<number, { numHeld: number; indices: number[] }>();
-  for (let i = 0; i < cards.length; ++i) {
-    const rank = cards[i].rank;
-
-    const rankHeld = ranksHeld.get(rank);
-    if (rankHeld === undefined) {
-      ranksHeld.set(rank, {
-        numHeld: 1,
-        indices: [i],
-      });
-    } else {
-      rankHeld.numHeld += 1;
-      rankHeld.indices.push(i);
-    }
-  }
-
-  for (const rankHeld of ranksHeld.values()) {
-    if (rankHeld.numHeld === 4) {
-      const playedCards: PlayedCard[] = cards.map((card, i) => {
-        const scored = rankHeld.indices.includes(i);
-        return { ...card, scored };
-      });
-      return {
-        result: true,
-        cards: playedCards,
-      };
-    }
-  }
-  return {
-    result: false,
-    cards: [],
-  };
-};
-
-// const isFullHouse = (cards: Card[]): Result => {
-//   if (isTwoPair(cards).result && isThreePair(cards).result) {
-//   }
-// }
-
 export const POKER_HAND_NAMES = {
   ROYAL_FLUSH: "royalFlush",
   STRAIGHT_FLUSH: "straightFlush",
@@ -188,10 +66,10 @@ export class HeldHand {
 
   // Returns available hands. Each hand is sorted by descending rank and then by
   // descending alpha suit, not necessarily the order in the held hand.
-  availableHands(): PokerHand[] {
+  public static availableHands(c: Card[]): PokerHand[] {
     // Sort highest to lowest so that when we iterate through we're assembling
     // the highest rank of any hand.
-    const cards = [...this.cards];
+    const cards = [...c];
     HeldHand.sortByRankDesc(cards);
 
     const flushes: Record<Suit, Card[]> = {
@@ -423,7 +301,15 @@ export class HeldHand {
       });
     }
 
-    availableHands.sort((a, b) => {
+    const sortedAvailableHands =
+      HeldHand.sortPokerHandsByPrecedence(availableHands);
+
+    return sortedAvailableHands;
+  }
+
+  private static sortPokerHandsByPrecedence(ph: PokerHand[]) {
+    const copy = [...ph];
+    copy.sort((a, b) => {
       const handPrecedence = Object.values(POKER_HAND_NAMES);
       const aName = handPrecedence.findIndex((handName) => a.name === handName);
       const bName = handPrecedence.findIndex((handName) => b.name === handName);
@@ -437,7 +323,32 @@ export class HeldHand {
 
       return aName - bName;
     });
+    return copy;
+  }
 
-    return availableHands;
+  public static determineWinningHand(options: { a: Card[]; b: Card[] }): {
+    winner: "a" | "b";
+    hand: PokerHand;
+  } {
+    const { a, b } = options;
+    const availableHandsA = HeldHand.availableHands(a).map((hand) => ({
+      ...hand,
+      id: "a",
+    }));
+    const availableHandsB = HeldHand.availableHands(b).map((hand) => ({
+      ...hand,
+      id: "b",
+    }));
+
+    const [highestHand] = HeldHand.sortPokerHandsByPrecedence([
+      ...availableHandsA,
+      ...availableHandsB,
+    ]);
+
+    // @ts-expect-error
+    const winner = highestHand.id;
+    // @ts-expect-error
+    delete highestHand.id;
+    return { winner, hand: highestHand };
   }
 }
