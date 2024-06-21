@@ -1,12 +1,13 @@
-import { CardContainer, SUITS } from "./Card";
+import type { Rank } from "./cards/Card";
+import { Card, SUIT } from "./cards/Card";
 
 export class Deck {
-  cards: CardContainer[] = [];
+  cards: Card[] = [];
 
   constructor() {
-    for (const suit of Object.values(SUITS)) {
+    for (const suit of Object.values(SUIT)) {
       for (let i = 1; i <= 13; i++) {
-        this.cards.push(new CardContainer({ suit, rank: i }));
+        this.cards.push(new Card({ suit, rank: i as Rank }));
       }
     }
   }

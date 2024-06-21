@@ -1,9 +1,6 @@
 import { Application, Sprite } from "pixi.js";
-import { Deck } from "./Deck";
-import { HandContainer } from "./Hand";
-import { CommunityCards } from "./CommunityCards";
 import { Result } from "./Result";
-import { Table } from "./Table";
+import { TableContainer } from "./TableContainer";
 
 const main = async () => {
   const app = new Application();
@@ -71,7 +68,7 @@ const main = async () => {
   const badResult = new Result({ result: "Incorrect :(" });
   badResult.position.set(app.screen.width / 2, app.screen.height / 2);
 
-  const table = new Table({
+  const table = new TableContainer({
     appWidth: app.screen.width,
     appHeight: app.screen.height,
   });

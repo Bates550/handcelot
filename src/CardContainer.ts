@@ -1,4 +1,5 @@
 import { Text, Container, Graphics } from "pixi.js";
+import { Card } from "./cards/Card";
 
 export const SUITS = {
   HEARTS: "hearts",
@@ -15,11 +16,13 @@ export class CardContainer extends Container {
   cardRectangle: Graphics;
 
   constructor(params: {
-    suit: Suit;
-    rank: number;
+    // suit: Suit;
+    // rank: number;
+    card: Card;
     position?: { x: number; y: number };
   }) {
-    const { suit, rank, position = { x: 0, y: 0 } } = params;
+    const { card, position = { x: 0, y: 0 } } = params;
+    const { rank, suit } = card;
 
     super();
     this.suit = suit;

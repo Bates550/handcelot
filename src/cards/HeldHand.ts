@@ -1,4 +1,4 @@
-import { Suit } from "../Card";
+import { Suit } from "../CardContainer";
 import { Card, RANK, Rank, SUIT } from "./Card";
 
 export const POKER_HAND_NAMES = {
